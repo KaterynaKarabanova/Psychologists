@@ -1,17 +1,23 @@
 import { Link } from "react-router-dom";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  AuthError,
+} from "firebase/auth";
+import { useState, ChangeEvent, FormEvent } from "react";
 
-const PasswordSignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+interface PasswordSignUpProps {}
+
+const PasswordSignUp: React.FC<PasswordSignUpProps> = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   // instantiate the auth service SDK
   const auth = getAuth();
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "email") setEmail(value);
@@ -19,7 +25,7 @@ const PasswordSignUp = () => {
   };
 
   // Handle user sign up with email and password
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -32,10 +38,12 @@ const PasswordSignUp = () => {
 
       // Pull out user's data from the userCredential property
       const user = userCredential.user;
-    } catch (err) {
+      console.log(user);
+    } catch (err: unknown) {
       // Handle errors here
-      const errorMessage = err.message;
-      const errorCode = err.code;
+      const typedError = err as AuthError;
+      const errorMessage = typedError.message;
+      const errorCode = typedError.code;
 
       setError(true);
 

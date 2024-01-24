@@ -1,4 +1,3 @@
-import "./App.css";
 import Layout from "./components/Layout/Layout";
 import Routers from "./components/Routes/Routes";
 import { initializeApp } from "firebase/app";

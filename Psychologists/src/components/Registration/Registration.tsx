@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   AuthError,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useState, ChangeEvent, FormEvent } from "react";
 
@@ -16,7 +17,18 @@ const PasswordSignUp: React.FC<PasswordSignUpProps> = () => {
 
   // instantiate the auth service SDK
   const auth = getAuth();
-
+  const signIn = async () => {
+    try {
+      const credentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(credentials.user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -89,7 +101,8 @@ const PasswordSignUp: React.FC<PasswordSignUpProps> = () => {
               name="password"
               value={password}
             />
-            <button type="submit">Sign Up</button>
+            <button>Sign Up</button>
+            <button onClick={signIn}>Sign In</button>
             {error && <p>{errorMessage}</p>}
           </form>
 

@@ -28,3 +28,8 @@ export interface Review {
   rating: number;
   comment: string;
 }
+
+export interface ModalProps {
+  toggleModal: () => void;
+  children: React.ReactNode;
+}

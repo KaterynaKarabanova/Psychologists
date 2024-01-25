@@ -31,15 +31,22 @@ export const GlobalStyles = createGlobalStyle`
   --primary-orange: rgba(252, 131, 44, 1);
   --primary-black:#191A15;
   --primary-white:rgba(251, 251, 251, 1);
+  --transparent-white:rgba(251, 251, 251, 0.5);
   --hover-orange:rgb(255 169 108);
   --border-gray:rgba(25, 26, 21, 0.2);
   --transparent-gray:rgba(25, 26, 21, 0.10);
+  --transparent-black:rgba(25, 26, 21, 0.60);
+  --primary-yellow:rgba(251, 199, 94, 1);
+  --primary-green:#54BE96;
   --transition: 0.2s ease-in;
 }
 body {
   font-family: "Inter", sans-serif;
   box-sizing: border-box;
   font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--primary-black);
 }
 
 h1,
@@ -85,8 +92,15 @@ img {
 }
 `;
 
+export const FlexCenter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Container = styled.div`
   box-sizing: border-box;
+  margin: 0 auto;
   display: block;
   width: 1440px;
   padding: 0 128px;

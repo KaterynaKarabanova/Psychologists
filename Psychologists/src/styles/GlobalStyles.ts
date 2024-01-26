@@ -32,12 +32,15 @@ export const GlobalStyles = createGlobalStyle`
   --primary-black:#191A15;
   --primary-white:rgba(251, 251, 251, 1);
   --transparent-white:rgba(251, 251, 251, 0.5);
-  --hover-orange:rgb(255 169 108);
+  --hover-orange:rgba(252, 131, 44, 0.2);
+  --light-gray:#F3F3F3;
   --border-gray:rgba(25, 26, 21, 0.2);
   --transparent-gray:rgba(25, 26, 21, 0.10);
+  --text-gray:rgba(138, 138, 137, 1);
   --transparent-black:rgba(25, 26, 21, 0.60);
   --primary-yellow:rgba(251, 199, 94, 1);
   --primary-green:#54BE96;
+  --light-green:#38CD3E;
   --transition: 0.2s ease-in;
 }
 body {

@@ -33,3 +33,15 @@ export interface ModalProps {
   toggleModal: () => void;
   children: React.ReactNode;
 }
+
+export interface TeachersListProps {
+  array: Teacher[];
+}
+
+export interface TeachersCardProps {
+  el: Teacher;
+}
+
+export interface ReviewListProps {
+  reviews: Review[] | undefined;
+}

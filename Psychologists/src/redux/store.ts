@@ -5,6 +5,7 @@ const initialState: RootState = {
   teachers: [],
   user: {
     token: "",
+    email: "",
     name: "",
   },
 };
@@ -17,7 +18,23 @@ const rootReducer = (state: RootState = initialState, action: Action) => {
         teachers: action.payload,
       };
       break;
-
+    case "user/add":
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({
+          token: action.payload.token,
+          name: action.payload.name,
+          email: action.payload.email,
+        })
+      );
+      return {
+        ...state,
+        user: {
+          token: action.payload.token,
+          name: action.payload.name,
+          email: action.payload.email,
+        },
+      };
     default:
       return state;
   }

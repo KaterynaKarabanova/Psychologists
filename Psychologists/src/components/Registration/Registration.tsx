@@ -1,81 +1,78 @@
-import { Link } from "react-router-dom";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import {
   createUserWithEmailAndPassword,
   getAuth,
   AuthError,
-  signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
-import { useState, ChangeEvent, FormEvent } from "react";
+import {
+  StyledBtn,
+  StyledInput,
+  StyledLabel,
+  StyledText,
+  StyledTitle,
+} from "../LogIn/Login.styled";
+import PassVisibility from "../PasswordVisibility/PassVisibility";
+import { usePassVisibility } from "../PasswordVisibility/usePassVisibility";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/actions";
+import { InitialValues, RegistrationProps } from "../../types/types";
 
-interface PasswordSignUpProps {}
+const Registration = (props: RegistrationProps) => {
+  const { toggleModal } = props;
+  const dispatch = useDispatch();
 
-const PasswordSignUp: React.FC<PasswordSignUpProps> = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const initialValues: InitialValues = {
+    name: "",
+    email: "",
+    password: "",
+  };
 
-  // instantiate the auth service SDK
+  const { visibility, toggleVisibility } = usePassVisibility();
+
   const auth = getAuth();
-  const signIn = async () => {
+
+  const handleSubmit = async (
+    values: InitialValues,
+    { setSubmitting }: FormikHelpers<InitialValues>
+  ) => {
     try {
-      const credentials = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log(credentials.user);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    if (name === "email") setEmail(value);
-    if (name === "password") setPassword(value);
-  };
-
-  // Handle user sign up with email and password
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      // create a new user with email and password
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      // Pull out user's data from the userCredential property
-      const user = userCredential.user;
-      console.log(user);
+      setSubmitting(true);
+      await createUserWithEmailAndPassword(auth, values.email, values.password);
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, {
+          displayName: values.name,
+        });
+        const idToken = await auth.currentUser.getIdToken();
+        dispatch(
+          setUser({ name: values.name, email: values.email, token: idToken })
+        );
+      }
+      toggleModal();
+      setSubmitting(false);
     } catch (err: unknown) {
-      // Handle errors here
+      setSubmitting(false);
       const typedError = err as AuthError;
       const errorMessage = typedError.message;
       const errorCode = typedError.code;
 
-      setError(true);
-
       switch (errorCode) {
         case "auth/weak-password":
-          setErrorMessage("The password is too weak.");
+          console.log("The password is too weak.");
           break;
         case "auth/email-already-in-use":
-          setErrorMessage(
+          console.log(
             "This email address is already in use by another account."
           );
           break;
         case "auth/invalid-email":
-          setErrorMessage("This email address is invalid.");
+          console.log("This email address is invalid.");
           break;
         case "auth/operation-not-allowed":
-          setErrorMessage("Email/password accounts are not enabled.");
+          console.log("Email/password accounts are not enabled.");
           break;
         default:
-          setErrorMessage(errorMessage);
+          console.log(errorMessage);
           break;
       }
     }
@@ -85,36 +82,53 @@ const PasswordSignUp: React.FC<PasswordSignUpProps> = () => {
     <div className="signupContainer">
       <div className="signupContainer__box">
         <div className="signupContainer__box__inner">
-          <h1>Sign Up</h1>
-          <form className="signupContainer__box__form" onSubmit={handleSubmit}>
-            <input
-              type="email"
-              placeholder="Email"
-              onChange={handleChange}
-              name="email"
-              value={email}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              onChange={handleChange}
-              name="password"
-              value={password}
-            />
-            <button>Sign Up</button>
-            <button onClick={signIn}>Sign In</button>
-            {error && <p>{errorMessage}</p>}
-          </form>
-
-          <div className="signupContainer__box__login">
-            <p>
-              Already have an account? <Link to="/signin">Sign In</Link>
-            </p>
-          </div>
+          <StyledTitle>Registration</StyledTitle>
+          <StyledText>
+            Thank you for your interest in our platform! In order to register,
+            we need some information. Please provide us with the following
+            information.
+          </StyledText>
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            {({ isSubmitting }) => (
+              <Form>
+                <StyledLabel>
+                  <Field
+                    as={StyledInput}
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                  />
+                </StyledLabel>
+                <StyledLabel>
+                  <Field
+                    as={StyledInput}
+                    type="text"
+                    name="email"
+                    placeholder="Email"
+                  />
+                </StyledLabel>
+                <StyledLabel>
+                  <Field
+                    as={StyledInput}
+                    type={visibility ? "password" : "text"}
+                    name="password"
+                    placeholder="Password"
+                  />
+                  <PassVisibility
+                    visibility={visibility}
+                    toggleVisibility={toggleVisibility}
+                  />
+                </StyledLabel>
+                <StyledBtn type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Registration..." : "Sign Up"}
+                </StyledBtn>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </div>
   );
 };
 
-export default PasswordSignUp;
+export default Registration;

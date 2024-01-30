@@ -20,13 +20,22 @@ import {
   StyledSpan,
   StyledSvg,
 } from "./TeachersCard.styled";
+// import { database } from "../../firebaseConfig/firebaseConfig";
+// import { getAuth} from "firebase/auth";
+
 const TeachersCard = (props: TeachersCardProps) => {
+  const { el } = props;
   const [showBtn, setShowBtn] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
+  // const auth = getAuth();
 
   const toggleBtn = () => {
     setShowBtn((prev) => !prev);
   };
-  const { el } = props;
+
+  // const toggleFavorite = async () => {
+
+  // };
   return (
     <StyledCard>
       <StyledImgWrapper>
@@ -71,9 +80,13 @@ const TeachersCard = (props: TeachersCardProps) => {
         <p>
           Price / 1 hour: <StyledPrice>{el.price_per_hour}$</StyledPrice>
         </p>
-        <StyledHeartBtn>
+        <StyledHeartBtn onClick={() => setIsFavorite((prev) => !prev)}>
           <svg width={26} height={26}>
-            <use href={`${sprite}#icon-heart`} />
+            <use
+              href={
+                isFavorite ? `${sprite}#icon-heart-2` : `${sprite}#icon-heart`
+              }
+            />
           </svg>
         </StyledHeartBtn>
       </StyledRating>

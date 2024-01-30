@@ -12,6 +12,7 @@ export const StyledBackdrop = styled(FlexCenter)`
 `;
 
 export const StyledModal = styled.div`
+  box-sizing: border-box;
   z-index: 101;
   top: 0;
   left: 0;
@@ -20,4 +21,11 @@ export const StyledModal = styled.div`
   position: relative;
   border-radius: 30px;
   background-color: var(--primary-white);
+`;
+
+export const StyledBtn = styled.button`
+  background-color: transparent;
+  position: absolute;
+  right: 20px;
+  top: 20px;
 `;

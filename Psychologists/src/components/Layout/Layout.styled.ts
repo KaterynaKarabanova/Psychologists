@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FlexCenter } from "../../styles/GlobalStyles";
 export const StyledHeader = styled.header`
   display: flex;
   align-items: center;
@@ -56,5 +57,19 @@ export const StyledTranspBtn = styled.button`
 
 export const StyledBtnWrapper = styled.div`
   display: flex;
+  align-items: center;
   column-gap: 8px;
+  font-weight: 500;
+`;
+
+export const StyledAvatarDiv = styled(FlexCenter)`
+  background-color: var(--primary-orange);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 6px;
+`;
+
+export const StyledUserName = styled.p`
+  margin-right: 20px;
 `;

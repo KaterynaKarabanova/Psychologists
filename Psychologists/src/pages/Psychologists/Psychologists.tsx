@@ -8,9 +8,6 @@ import { Teacher } from "../../types/types";
 import { Container } from "../../styles/GlobalStyles";
 import TeachersList from "../../components/TeachersList/TeachersList";
 
-// import { database } from "../../firebaseConfig/firebaseConfig";
-// import { get, ref } from "firebase/database";
-
 const Psychologists = () => {
   const dispatch = useDispatch();
   const teachers: Teacher[] = useSelector(allTeachers);

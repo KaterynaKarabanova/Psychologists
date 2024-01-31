@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TeachersCardProps } from "../../types/types";
 import ReviewList from "../ReviewList/ReviewList";
 import sprite from "../../images/sprite.svg";
@@ -20,22 +20,33 @@ import {
   StyledSpan,
   StyledSvg,
 } from "./TeachersCard.styled";
-// import { database } from "../../firebaseConfig/firebaseConfig";
-// import { getAuth} from "firebase/auth";
+import { toggleFavoriteToUser, getFav } from "../../redux/operations";
 
 const TeachersCard = (props: TeachersCardProps) => {
   const { el } = props;
   const [showBtn, setShowBtn] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  // const auth = getAuth();
+
+  useEffect(() => {
+    getFav().then((data) => setIsFavorite(data.includes(el.id)));
+  }, [el.id]);
 
   const toggleBtn = () => {
     setShowBtn((prev) => !prev);
   };
 
-  // const toggleFavorite = async () => {
+  const handleToggleFavorite = async () => {
+    try {
+      const success = await toggleFavoriteToUser(el.id);
+      if (success !== undefined) {
+        setIsFavorite((prev) => !prev); // Update isFavorite state immediately after toggling favorite status
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+      // Handle error
+    }
+  };
 
-  // };
   return (
     <StyledCard>
       <StyledImgWrapper>
@@ -80,7 +91,7 @@ const TeachersCard = (props: TeachersCardProps) => {
         <p>
           Price / 1 hour: <StyledPrice>{el.price_per_hour}$</StyledPrice>
         </p>
-        <StyledHeartBtn onClick={() => setIsFavorite((prev) => !prev)}>
+        <StyledHeartBtn onClick={() => handleToggleFavorite()}>
           <svg width={26} height={26}>
             <use
               href={

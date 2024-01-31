@@ -17,6 +17,7 @@ import { usePassVisibility } from "../PasswordVisibility/usePassVisibility";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/actions";
 import { InitialValues, RegistrationProps } from "../../types/types";
+import GoogleAuth from "./GoogleSignUp";
 
 const Registration = (props: RegistrationProps) => {
   const { toggleModal } = props;
@@ -48,6 +49,7 @@ const Registration = (props: RegistrationProps) => {
           setUser({ name: values.name, email: values.email, token: idToken })
         );
       }
+
       toggleModal();
       setSubmitting(false);
     } catch (err: unknown) {
@@ -125,6 +127,7 @@ const Registration = (props: RegistrationProps) => {
               </Form>
             )}
           </Formik>
+          <GoogleAuth />
         </div>
       </div>
     </div>

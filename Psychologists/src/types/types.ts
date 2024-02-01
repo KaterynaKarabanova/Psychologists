@@ -1,5 +1,8 @@
 export interface RootState {
-  teachers: Teacher[];
+  teachers: {
+    all: Teacher[];
+    showed: Teacher[];
+  };
   user: {
     token: string;
     email: string;

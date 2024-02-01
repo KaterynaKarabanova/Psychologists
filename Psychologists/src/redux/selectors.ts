@@ -1,6 +1,8 @@
 import { RootState } from "../types/types";
 
-export const allTeachers = (state: RootState) => state.teachers;
+export const allTeachers = (state: RootState) => state.teachers.all;
+
+export const showedTeachers = (state: RootState) => state.teachers.showed;
 
 export const userInfo = (state: RootState) => state.user;
 

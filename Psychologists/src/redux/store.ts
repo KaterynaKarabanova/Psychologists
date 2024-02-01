@@ -2,7 +2,10 @@ import { createStore } from "redux";
 import { Action, RootState } from "../types/types";
 
 const initialState: RootState = {
-  teachers: [],
+  teachers: {
+    all: [],
+    showed: [],
+  },
   user: {
     token: "",
     email: "",
@@ -15,7 +18,13 @@ const rootReducer = (state: RootState = initialState, action: Action) => {
     case "teachers/getAll":
       return {
         ...state,
-        teachers: action.payload,
+        teachers: { ...state.teachers, all: action.payload },
+      };
+      break;
+    case "teachers/getShowed":
+      return {
+        ...state,
+        teachers: { ...state.teachers, showed: action.payload },
       };
       break;
     case "user/add":

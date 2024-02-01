@@ -7,6 +7,13 @@ export const setAllTeachers = (array: Teacher[]) => {
   };
 };
 
+export const setShowedTeachers = (array: Teacher[]) => {
+  return {
+    type: "teachers/getShowed",
+    payload: array,
+  };
+};
+
 export const setUser = (data: User) => {
   return {
     type: "user/add",

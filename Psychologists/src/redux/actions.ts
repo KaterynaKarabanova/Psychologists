@@ -20,3 +20,10 @@ export const setUser = (data: User) => {
     payload: data,
   };
 };
+
+export const setFilter = (value: string) => {
+  return {
+    type: "filter/set",
+    payload: value,
+  };
+};

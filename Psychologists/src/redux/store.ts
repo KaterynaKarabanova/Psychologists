@@ -11,6 +11,7 @@ const initialState: RootState = {
     email: "",
     name: "",
   },
+  filter: "ALL",
 };
 
 const rootReducer = (state: RootState = initialState, action: Action) => {
@@ -27,6 +28,11 @@ const rootReducer = (state: RootState = initialState, action: Action) => {
         teachers: { ...state.teachers, showed: action.payload },
       };
       break;
+    case "filter/set":
+      return {
+        ...state,
+        filter: action.payload, // Set the filter based on the action payload
+      };
     case "user/add":
       localStorage.setItem(
         "userInfo",

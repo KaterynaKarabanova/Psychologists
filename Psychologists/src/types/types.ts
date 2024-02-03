@@ -8,6 +8,7 @@ export interface RootState {
     email: string;
     name: string;
   };
+  filter: string;
 }
 
 export interface Action {
@@ -16,6 +17,7 @@ export interface Action {
 }
 
 export interface Teacher {
+  localeCompare(b: Teacher): number;
   id: number;
   about: string;
   avatar_url: string;

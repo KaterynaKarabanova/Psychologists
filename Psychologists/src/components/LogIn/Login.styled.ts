@@ -7,6 +7,7 @@ export const StyledTitle = styled.h2`
   line-height: 48px;
   letter-spacing: -0.8px;
   margin-bottom: 20px;
+  color: var(--primary-black);
 `;
 
 export const StyledText = styled.p`

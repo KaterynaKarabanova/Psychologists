@@ -21,15 +21,22 @@ import {
   StyledSvg,
 } from "./TeachersCard.styled";
 import { toggleFavoriteToUser, getFav } from "../../redux/operations";
+import Modal from "../Modal/Modal";
+import Appointment from "../Appointment/Appointment";
 
 const TeachersCard = (props: TeachersCardProps) => {
   const { el } = props;
   const [showBtn, setShowBtn] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     getFav().then((data) => setIsFavorite(data.includes(el.id)));
   }, [el.id]);
+
+  const toggleModal = () => {
+    setShowModal((prev) => !prev);
+  };
 
   const toggleBtn = () => {
     setShowBtn((prev) => !prev);
@@ -79,7 +86,9 @@ const TeachersCard = (props: TeachersCardProps) => {
         ) : (
           <div>
             <ReviewList reviews={el.reviews} />
-            <StyledAppointmentBtn>Make an appointment</StyledAppointmentBtn>
+            <StyledAppointmentBtn onClick={toggleModal}>
+              Make an appointment
+            </StyledAppointmentBtn>
           </div>
         )}
       </div>
@@ -101,6 +110,11 @@ const TeachersCard = (props: TeachersCardProps) => {
           </svg>
         </StyledHeartBtn>
       </StyledRating>
+      {showModal && (
+        <Modal toggleModal={toggleModal}>
+          <Appointment name={el.name} avatar={el.avatar_url} />
+        </Modal>
+      )}
     </StyledCard>
   );
 };

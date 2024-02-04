@@ -82,3 +82,15 @@ export interface InitialLoginValues {
   email: string;
   password: string;
 }
+
+export interface InitialAppointmentValues {
+  email: string;
+  phone: string;
+  name: string;
+  comment: string;
+}
+
+export interface AppointmentProps {
+  name: string;
+  avatar: string;
+}

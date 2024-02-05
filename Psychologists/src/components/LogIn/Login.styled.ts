@@ -29,6 +29,10 @@ export const StyledInput = styled.input`
   box-sizing: border-box;
   border-radius: 12px;
   border: 1px solid var(--transparent-gray);
+  &:focus {
+    outline: none;
+    border: 3px dotted var(--light-green);
+  }
 `;
 
 export const StyledBtn = styled(StyledOrangeBtn)`

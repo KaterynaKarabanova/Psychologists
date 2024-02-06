@@ -93,4 +93,13 @@ export interface InitialAppointmentValues {
 export interface AppointmentProps {
   name: string;
   avatar: string;
+  id: number;
+}
+
+export interface AppointmentData {
+  email: string;
+  phone: string;
+  name: string;
+  comment: string;
+  time: string;
 }

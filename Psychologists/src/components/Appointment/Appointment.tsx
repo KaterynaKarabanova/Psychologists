@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { AppointmentProps, InitialAppointmentValues } from "../../types/types";
+import {
+  AppointmentData,
+  AppointmentProps,
+  InitialAppointmentValues,
+} from "../../types/types";
 import {
   StyledBtn,
   StyledInput,
@@ -20,9 +24,12 @@ import { TimePicker } from "@material-ui/pickers";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { AppointmentSchema } from "../../schemas/AppointmentSchema";
+import { sendAppointments } from "../../redux/operations";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Appointment = (props: AppointmentProps) => {
-  const { name, avatar } = props;
+  const { name, avatar, id } = props;
   const [selectedTime, setSelectedTime] = useState(new Date());
 
   const handleTimeChange = (time: any) => {
@@ -56,17 +63,24 @@ const Appointment = (props: AppointmentProps) => {
 
   const handleSubmit = async (
     values: InitialAppointmentValues,
-    { setSubmitting }: FormikHelpers<InitialAppointmentValues>
+    { setSubmitting, resetForm }: FormikHelpers<InitialAppointmentValues>
   ) => {
     setSubmitting(false);
-    const data = {
+    const data: AppointmentData = {
       ...values,
-      time: selectedTime,
+      time: `${selectedTime.getHours()}:${selectedTime.getMinutes()}`,
     };
-    console.log(data);
+    try {
+      await sendAppointments(id, data);
+      toast("Appointment sent successfully!", { type: "success" });
+      resetForm();
+    } catch (error) {
+      toast.error("Something went wrong! Check your info and try again");
+    }
   };
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <ToastContainer />
       <div>
         {" "}
         <StyledTitle>Make an appointment with a psychologists</StyledTitle>

@@ -112,7 +112,7 @@ const TeachersCard = (props: TeachersCardProps) => {
       </StyledRating>
       {showModal && (
         <Modal toggleModal={toggleModal}>
-          <Appointment name={el.name} avatar={el.avatar_url} />
+          <Appointment id={el.id} name={el.name} avatar={el.avatar_url} />
         </Modal>
       )}
     </StyledCard>

@@ -8,7 +8,9 @@ export const StyledHeader = styled.header`
   border-bottom: 1px solid var(--transparent-gray);
 `;
 
-export const StyledLogo = styled.a`
+export const StyledLogo = styled.button`
+  cursor: pointer;
+  background-color: transparent;
   color: var(--primary-orange);
   font-size: 20px;
   font-weight: 500;

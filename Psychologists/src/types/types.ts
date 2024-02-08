@@ -1,3 +1,5 @@
+import { SVGProps } from "react";
+
 export interface RootState {
   teachers: {
     all: Teacher[];
@@ -102,4 +104,12 @@ export interface AppointmentData {
   name: string;
   comment: string;
   time: string;
+}
+
+export interface StyledFavSvgProps extends SVGProps<SVGSVGElement> {
+  isFav?: boolean;
+}
+
+export interface GlobalStylesProps {
+  color?: string; // Define the color prop
 }

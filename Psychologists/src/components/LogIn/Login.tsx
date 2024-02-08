@@ -12,6 +12,10 @@ import PassVisibility from "../PasswordVisibility/PassVisibility";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/actions";
 import { InitialLoginValues, LoginProps } from "../../types/types";
+import { LoginSchema } from "../../schemas/LoginSchema";
+import { ErrorText } from "../Appointment/Appointment.styled";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = (props: LoginProps) => {
   const { toggleModal } = props;
@@ -36,27 +40,35 @@ const Login = (props: LoginProps) => {
         values.password
       );
       if (credentials && auth.currentUser) {
-        const name = credentials.user.displayName || "User";
+        const userName = credentials.user.displayName || "User";
         const idToken = await auth.currentUser?.getIdToken();
-        dispatch(setUser({ name: name, email: values.email, token: idToken }));
+        dispatch(
+          setUser({ name: userName, email: values.email, token: idToken })
+        );
+        toast(`Welcome, ${userName} !`, { type: "success" });
       }
 
-      toggleModal();
+      setTimeout(toggleModal, 1500);
     } catch (error) {
-      console.log(error);
+      toast.error("Invalid email or password");
     }
     setSubmitting(false);
   };
 
   return (
     <div>
+      <ToastContainer />
       <StyledTitle>Login</StyledTitle>
       <StyledText>
         Welcome back! Please enter your credentials to access your account and
         continue your search for a psychologist.
       </StyledText>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({ isSubmitting }) => (
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={LoginSchema}
+      >
+        {({ isSubmitting, errors, touched }) => (
           <Form>
             <StyledLabel>
               <Field
@@ -65,6 +77,9 @@ const Login = (props: LoginProps) => {
                 name="email"
                 placeholder="Email"
               />
+              {errors.email && touched.email ? (
+                <ErrorText>{errors.email}</ErrorText>
+              ) : null}
             </StyledLabel>
             <StyledLabel>
               <Field
@@ -73,18 +88,20 @@ const Login = (props: LoginProps) => {
                 name="password"
                 placeholder="Password"
               />
+              {errors.password && touched.password ? (
+                <ErrorText>{errors.password}</ErrorText>
+              ) : null}
               <PassVisibility
                 visibility={visibility}
                 toggleVisibility={toggleVisibility}
               />
             </StyledLabel>
-            <StyledBtn disabled={isSubmitting}>
+            <StyledBtn type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Logging in..." : "Log In"}
             </StyledBtn>
           </Form>
         )}
       </Formik>
-      {/* <button onClick={() => signOut(auth)}>Sign Out</button> */}
     </div>
   );
 };

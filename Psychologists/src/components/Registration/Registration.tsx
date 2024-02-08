@@ -18,6 +18,10 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/actions";
 import { InitialValues, RegistrationProps } from "../../types/types";
 import GoogleAuth from "./GoogleSignUp";
+import { ErrorText } from "../Appointment/Appointment.styled";
+import { RegisterSchema } from "../../schemas/RegisterSchema";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Registration = (props: RegistrationProps) => {
   const { toggleModal } = props;
@@ -49,8 +53,9 @@ const Registration = (props: RegistrationProps) => {
           setUser({ name: values.name, email: values.email, token: idToken })
         );
       }
+      toast(`Welcome, ${values.name} !`, { type: "success" });
+      setTimeout(toggleModal, 1500);
 
-      toggleModal();
       setSubmitting(false);
     } catch (err: unknown) {
       setSubmitting(false);
@@ -60,20 +65,21 @@ const Registration = (props: RegistrationProps) => {
 
       switch (errorCode) {
         case "auth/weak-password":
-          console.log("The password is too weak.");
+          toast.error("The password is too weak.");
           break;
         case "auth/email-already-in-use":
-          console.log(
+          toast.error(
             "This email address is already in use by another account."
           );
           break;
         case "auth/invalid-email":
-          console.log("This email address is invalid.");
+          toast.error("This email address is invalid.");
           break;
         case "auth/operation-not-allowed":
-          console.log("Email/password accounts are not enabled.");
+          toast.error("Email/password accounts are not enabled.");
           break;
         default:
+          toast.error("Something went wrong! Check data and try again!");
           console.log(errorMessage);
           break;
       }
@@ -82,6 +88,7 @@ const Registration = (props: RegistrationProps) => {
 
   return (
     <div className="signupContainer">
+      <ToastContainer />
       <div className="signupContainer__box">
         <div className="signupContainer__box__inner">
           <StyledTitle>Registration</StyledTitle>
@@ -90,8 +97,12 @@ const Registration = (props: RegistrationProps) => {
             we need some information. Please provide us with the following
             information.
           </StyledText>
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-            {({ isSubmitting }) => (
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={RegisterSchema}
+          >
+            {({ isSubmitting, errors, touched }) => (
               <Form>
                 <StyledLabel>
                   <Field
@@ -100,6 +111,9 @@ const Registration = (props: RegistrationProps) => {
                     name="name"
                     placeholder="Name"
                   />
+                  {errors.name && touched.name ? (
+                    <ErrorText>{errors.name}</ErrorText>
+                  ) : null}
                 </StyledLabel>
                 <StyledLabel>
                   <Field
@@ -108,6 +122,9 @@ const Registration = (props: RegistrationProps) => {
                     name="email"
                     placeholder="Email"
                   />
+                  {errors.email && touched.email ? (
+                    <ErrorText>{errors.email}</ErrorText>
+                  ) : null}
                 </StyledLabel>
                 <StyledLabel>
                   <Field
@@ -116,6 +133,9 @@ const Registration = (props: RegistrationProps) => {
                     name="password"
                     placeholder="Password"
                   />
+                  {errors.password && touched.password ? (
+                    <ErrorText>{errors.password}</ErrorText>
+                  ) : null}
                   <PassVisibility
                     visibility={visibility}
                     toggleVisibility={toggleVisibility}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select, { SingleValue } from "react-select";
 import { StyledWrapper, styles } from "./Filters.styled";
 import { useDispatch } from "react-redux";
@@ -29,6 +29,7 @@ const Filters = () => {
       transform: menuIsOpen ? "rotate(180deg)" : null,
     }),
   };
+  useEffect(() => {}, [selectedValue]);
 
   const handleChange = (
     selectedOption: SingleValue<{ value: string; label: string }>

@@ -5,6 +5,7 @@ import { firebaseConfig } from "./firebaseConfig/firebaseConfig.ts";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "./redux/actions.ts";
+import { ThemeProvider } from "./styles/ThemeContext.tsx";
 initializeApp(firebaseConfig);
 
 function App() {
@@ -17,8 +18,10 @@ function App() {
   }, [dispatch]);
   return (
     <>
-      <Layout />
-      <Routers />
+      <ThemeProvider>
+        <Layout />
+        <Routers />
+      </ThemeProvider>
     </>
   );
 }

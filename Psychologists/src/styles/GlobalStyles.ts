@@ -3,7 +3,8 @@ import fontRegular from "../../public/fonts/static/Inter-Regular.ttf";
 import fontSemiBold from "../../public/fonts/static/Inter-SemiBold.ttf";
 import fontBold from "../../public/fonts/static/Inter-Bold.ttf";
 import fontMedium from "../../public/fonts/static/Inter-Medium.ttf";
-export const GlobalStyles = createGlobalStyle` 
+import { GlobalStylesProps } from "../types/types";
+export const GlobalStyles = createGlobalStyle<GlobalStylesProps>` 
 @font-face {
   font-family: "Inter";
   font-weight: 400;
@@ -28,7 +29,8 @@ export const GlobalStyles = createGlobalStyle`
   src: url(${fontBold}) format('truetype');
 }
 :root{
-  --primary-orange: rgba(252, 131, 44, 1);
+  --primary-orange: ${(props) => props.color};
+  --primary-blue:rgba(52, 112, 255, 1);
   --primary-black:#191A15;
   --primary-white:rgba(251, 251, 251, 1);
   --transparent-white:rgba(251, 251, 251, 0.5);

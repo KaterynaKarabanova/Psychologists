@@ -31,8 +31,7 @@ export const getFav = async () => {
 export const toggleFavoriteToUser = async (cardId: number) => {
   const userId = auth.currentUser?.uid;
   if (!userId) {
-    console.error("User not logged in");
-    return;
+    throw new Error();
   }
 
   try {

@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Navigation from "./Navigation/Navigation";
 import {
   StyledAvatarDiv,
@@ -20,8 +20,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAuth, signOut } from "firebase/auth";
 import { setUser } from "../../redux/actions";
 import sprite from "../../images/sprite.svg";
+import ThemeSwitcher from "./ThemeSwitcher/ThemeSwitcher";
 
 const Layout = () => {
+  const navigate = useNavigate();
   const token = useSelector(accessToken);
   const userName = useSelector(userNameInfo);
   const dispatch = useDispatch();
@@ -46,10 +48,11 @@ const Layout = () => {
     <div>
       <Container>
         <StyledHeader>
-          <StyledLogo href="/">
+          <StyledLogo onClick={() => navigate("/Psychologists/")}>
             psychologists.<StyledLogoSpan>services</StyledLogoSpan>
           </StyledLogo>
           <Navigation />
+          <ThemeSwitcher />
           <StyledBtnWrapper>
             {token ? (
               <>

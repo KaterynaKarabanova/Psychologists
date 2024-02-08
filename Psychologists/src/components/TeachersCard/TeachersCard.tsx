@@ -5,6 +5,7 @@ import sprite from "../../images/sprite.svg";
 import {
   StyledAppointmentBtn,
   StyledCard,
+  StyledFavSvg,
   StyledHeartBtn,
   StyledImg,
   StyledImgWrapper,
@@ -23,6 +24,7 @@ import {
 import { toggleFavoriteToUser, getFav } from "../../redux/operations";
 import Modal from "../Modal/Modal";
 import Appointment from "../Appointment/Appointment";
+import { ToastContainer, toast } from "react-toastify";
 
 const TeachersCard = (props: TeachersCardProps) => {
   const { el } = props;
@@ -49,6 +51,9 @@ const TeachersCard = (props: TeachersCardProps) => {
         setIsFavorite((prev) => !prev); // Update isFavorite state immediately after toggling favorite status
       }
     } catch (error) {
+      toast.info(
+        "Authorize first! Only authorized users could mark cards as favourite"
+      );
       console.error("Error toggling favorite:", error);
       // Handle error
     }
@@ -56,6 +61,7 @@ const TeachersCard = (props: TeachersCardProps) => {
 
   return (
     <StyledCard>
+      <ToastContainer />
       <StyledImgWrapper>
         <StyledImg src={el.avatar_url} alt="" />
         <StyledSvg width={24} height={24}>
@@ -101,13 +107,9 @@ const TeachersCard = (props: TeachersCardProps) => {
           Price / 1 hour: <StyledPrice>{el.price_per_hour}$</StyledPrice>
         </p>
         <StyledHeartBtn onClick={() => handleToggleFavorite()}>
-          <svg width={26} height={26}>
-            <use
-              href={
-                isFavorite ? `${sprite}#icon-heart-2` : `${sprite}#icon-heart`
-              }
-            />
-          </svg>
+          <StyledFavSvg width={26} height={26} isFav={isFavorite}>
+            <use href={`${sprite}#icon-heart-2`} />
+          </StyledFavSvg>
         </StyledHeartBtn>
       </StyledRating>
       {showModal && (

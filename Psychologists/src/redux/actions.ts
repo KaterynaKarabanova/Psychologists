@@ -27,3 +27,17 @@ export const setFilter = (value: string) => {
     payload: value,
   };
 };
+
+export const setFilterFav = (value: string) => {
+  return {
+    type: "filterFav/set",
+    payload: value,
+  };
+};
+
+export const setFav = (array: Teacher[]) => {
+  return {
+    type: "Fav/set",
+    payload: array,
+  };
+};

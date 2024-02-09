@@ -11,7 +11,9 @@ const initialState: RootState = {
     email: "",
     name: "",
   },
+  favorites: [],
   filter: "ALL",
+  filterFav: "ALL",
 };
 
 const rootReducer = (state: RootState = initialState, action: Action) => {
@@ -32,6 +34,16 @@ const rootReducer = (state: RootState = initialState, action: Action) => {
       return {
         ...state,
         filter: action.payload, // Set the filter based on the action payload
+      };
+    case "filterFav/set":
+      return {
+        ...state,
+        filterFav: action.payload, // Set the filter based on the action payload
+      };
+    case "Fav/set":
+      return {
+        ...state,
+        favorites: action.payload, // Set the filter based on the action payload
       };
     case "user/add":
       localStorage.setItem(

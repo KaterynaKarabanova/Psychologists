@@ -10,7 +10,9 @@ export interface RootState {
     email: string;
     name: string;
   };
+  favorites: Teacher[];
   filter: string;
+  filterFav: string;
 }
 
 export interface Action {

@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Container } from "../../styles/GlobalStyles";
-import { Teacher } from "../../types/types";
-import { allTeachers } from "../../redux/selectors";
-import { useEffect, useState } from "react";
-import { setAllTeachers } from "../../redux/actions";
+import { RootState, Teacher } from "../../types/types";
+import { allTeachers, filteredFavoriteTeachers } from "../../redux/selectors";
+import { useEffect, useMemo } from "react";
+import { setAllTeachers, setFav } from "../../redux/actions";
 import TeachersList from "../../components/TeachersList/TeachersList";
 import { fetchData, getFav } from "../../redux/operations";
 import {
@@ -18,24 +18,39 @@ import {
 import sprite from "../../images/sprite.svg";
 import favImg from "../../images/favorites.jpg";
 import { useNavigate } from "react-router-dom";
+import Filters from "../../components/Filters/Filters";
 
 const Favorite = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [favorites, setFavorites] = useState<Teacher[]>([]);
+  // const [favorites, setFavorites] = useState<Teacher[]>([]);
   const teachers: Teacher[] = useSelector(allTeachers);
 
+  const favoriteTeachers: Teacher[] = useSelector((state: RootState) =>
+    filteredFavoriteTeachers(state)
+  );
+
+  const memoizedFavoriteTeachers = useMemo(
+    () => favoriteTeachers,
+    [favoriteTeachers]
+  );
   useEffect(() => {
     fetchData().then((res) => dispatch(setAllTeachers(res)));
+  }, [dispatch]);
+
+  useEffect(() => {
     getFav().then((data) =>
-      setFavorites(teachers.filter((el) => data.includes(el.id)))
+      dispatch(setFav(teachers.filter((el) => data.includes(el.id))))
     );
   }, [dispatch, teachers]);
 
   return (
     <Container>
-      {favorites.length ? (
-        <TeachersList array={favorites} />
+      {favoriteTeachers.length ? (
+        <>
+          <Filters />
+          <TeachersList array={memoizedFavoriteTeachers} />
+        </>
       ) : (
         <StyledHomeWrapper>
           <StyledTextWrapper>

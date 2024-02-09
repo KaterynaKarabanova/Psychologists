@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import Select, { SingleValue } from "react-select";
 import { StyledWrapper, styles } from "./Filters.styled";
 import { useDispatch } from "react-redux";
-import { setFilter } from "../../redux/actions";
+import { setFilter, setFilterFav } from "../../redux/actions";
+import { useLocation } from "react-router-dom";
 
 const options = [
   { value: "AZ", label: "A to Z" },
@@ -20,6 +21,7 @@ const Filters = () => {
     SingleValue<{ value: string; label: string }>
   >({ value: "ALL", label: "Show all" });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const location = useLocation();
 
   const stylesSelect = {
     ...styles,
@@ -29,6 +31,7 @@ const Filters = () => {
       transform: menuIsOpen ? "rotate(180deg)" : null,
     }),
   };
+
   useEffect(() => {}, [selectedValue]);
 
   const handleChange = (
@@ -36,7 +39,9 @@ const Filters = () => {
   ) => {
     setSelectedValue(selectedOption);
     if (selectedOption) {
-      dispatch(setFilter(selectedOption.value));
+      location.pathname === "/Psychologists/psychologists"
+        ? dispatch(setFilter(selectedOption.value))
+        : dispatch(setFilterFav(selectedOption.value));
     }
   };
 

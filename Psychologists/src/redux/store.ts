@@ -14,6 +14,7 @@ const initialState: RootState = {
   favorites: [],
   filter: "ALL",
   filterFav: "ALL",
+  shoLoadMore: true,
 };
 
 const rootReducer = (state: RootState = initialState, action: Action) => {
@@ -44,6 +45,11 @@ const rootReducer = (state: RootState = initialState, action: Action) => {
       return {
         ...state,
         favorites: action.payload, // Set the filter based on the action payload
+      };
+    case "loadMore/set":
+      return {
+        ...state,
+        shoLoadMore: action.payload, // Set the filter based on the action payload
       };
     case "user/add":
       localStorage.setItem(

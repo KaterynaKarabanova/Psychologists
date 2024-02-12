@@ -1,77 +1,60 @@
 import styled from "styled-components";
-import { FlexCenter } from "../../styles/GlobalStyles";
-export const StyledHeader = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 38px 0;
-  border-bottom: 1px solid var(--transparent-gray);
+import { StyledHeader } from "./Header/Header.styled";
+
+export const StyledMenuBtn = styled.button`
+  background-color: transparent;
+  position: absolute;
+  right: 15px;
+`;
+
+export const StyledMenuModal = styled.div`
+  box-sizing: border-box;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  padding: 70px 20px;
+  z-index: 10;
+  @media (min-width: 1440px) {
+    display: none;
+  }
+`;
+
+export const StyledHeaderMenu = styled(StyledHeader)`
+  flex-direction: row;
+  padding: 38px 20px;
+  @media (min-width: 768px) {
+    padding: 38px 30px;
+  }
+  @media (min-width: 1440px) {
+    display: none;
+  }
+`;
+
+export const StyledHeaderHidden = styled.div`
+  display: none;
+  @media (min-width: 1440px) {
+    display: block;
+  }
 `;
 
 export const StyledLogo = styled.button`
   cursor: pointer;
   background-color: transparent;
   color: var(--primary-orange);
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 600;
   line-height: 24px;
   letter-spacing: -0.4px;
+  @media (min-width: 1440px) {
+    font-size: 20px;
+    font-weight: 500;
+  }
 `;
 
 export const StyledLogoSpan = styled.span`
   color: var(--primary-black);
-`;
-
-export const StyledOrangeBtn = styled.button`
-  font-family: inherit;
-  display: flex;
-  padding: 14px 40px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 30px;
-  background-color: var(--primary-orange);
-  color: var(--primary-white);
-  font-weight: 500;
-  transition: all var(--transition);
-  &:hover {
-    background-color: var(--hover-orange);
-  }
-`;
-
-export const StyledTranspBtn = styled.button`
-  font-family: inherit;
-  display: flex;
-  padding: 14px 39px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 30px;
-  background: transparent;
-  border: 1px solid var(--border-gray);
-  color: var(--primary-black);
-  font-weight: 500;
-  transition: all var(--transition);
-  &:hover {
-    background: var(--hover-orange);
-  }
-`;
-
-export const StyledBtnWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
-  font-weight: 500;
-`;
-
-export const StyledAvatarDiv = styled(FlexCenter)`
-  background-color: var(--primary-orange);
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  margin-right: 6px;
-`;
-
-export const StyledUserName = styled.p`
-  margin-right: 20px;
 `;

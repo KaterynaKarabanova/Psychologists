@@ -1,95 +1,56 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import Navigation from "./Navigation/Navigation";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
-  StyledAvatarDiv,
-  StyledBtnWrapper,
-  StyledHeader,
+  StyledHeaderHidden,
+  StyledHeaderMenu,
   StyledLogo,
   StyledLogoSpan,
-  StyledOrangeBtn,
-  StyledTranspBtn,
-  StyledUserName,
+  StyledMenuBtn,
+  StyledMenuModal,
 } from "./Layout.styled";
 import { Container } from "../../styles/GlobalStyles";
-import { useState } from "react";
-import Modal from "../Modal/Modal";
-import Login from "../LogIn/Login";
-import Registration from "../Registration/Registration";
-import { accessToken, userNameInfo } from "../../redux/selectors";
-import { useDispatch, useSelector } from "react-redux";
-import { getAuth, signOut } from "firebase/auth";
-import { setUser } from "../../redux/actions";
 import sprite from "../../images/sprite.svg";
-import ThemeSwitcher from "./ThemeSwitcher/ThemeSwitcher";
+import Header from "./Header/Header";
+import { useEffect, useState } from "react";
+import { StyledBtn } from "../Modal/Modal.styled";
 
 const Layout = () => {
   const navigate = useNavigate();
-  const token = useSelector(accessToken);
-  const userName = useSelector(userNameInfo);
-  const dispatch = useDispatch();
-  const [loginModal, setLoginModal] = useState(false);
-  const [registerModal, setRegisterModal] = useState(false);
-  const auth = getAuth();
+  const location = useLocation();
+  const [showModal, setShowModal] = useState(false);
 
-  const toggleLogin = () => {
-    setLoginModal((prev) => !prev);
+  const toggleModal = () => {
+    setShowModal((prev) => !prev);
   };
 
-  const toggleRegister = () => {
-    setRegisterModal((prev) => !prev);
-  };
-
-  const onSignOut = () => {
-    signOut(auth);
-    dispatch(setUser({ name: "", email: "", token: "" }));
-  };
+  useEffect(() => {
+    setShowModal(false);
+  }, [location.pathname]);
 
   return (
     <div>
+      <StyledHeaderMenu>
+        <StyledLogo onClick={() => navigate("/Psychologists/")}>
+          psychologists.<StyledLogoSpan>services</StyledLogoSpan>
+        </StyledLogo>
+        <StyledMenuBtn onClick={toggleModal}>
+          <svg width={20} height={20}>
+            <use href={`${sprite}#icon-menu`} />
+          </svg>
+        </StyledMenuBtn>
+      </StyledHeaderMenu>
       <Container>
-        <StyledHeader>
-          <StyledLogo onClick={() => navigate("/Psychologists/")}>
-            psychologists.<StyledLogoSpan>services</StyledLogoSpan>
-          </StyledLogo>
-          <Navigation />
-          <ThemeSwitcher />
-          <StyledBtnWrapper>
-            {token ? (
-              <>
-                <StyledAvatarDiv>
-                  <svg width={24} height={24}>
-                    <use href={`${sprite}#icon-user`} />
-                  </svg>
-                </StyledAvatarDiv>
-                <StyledUserName>{userName}</StyledUserName>
-                <StyledTranspBtn type="button" onClick={onSignOut}>
-                  Log Out
-                </StyledTranspBtn>
-              </>
-            ) : (
-              <>
-                {" "}
-                <StyledTranspBtn onClick={() => setLoginModal(true)}>
-                  Log In
-                </StyledTranspBtn>
-                <StyledOrangeBtn
-                  onClick={() => setRegisterModal((prev) => !prev)}
-                >
-                  Registration
-                </StyledOrangeBtn>
-              </>
-            )}
-          </StyledBtnWrapper>
-        </StyledHeader>
-        {loginModal && (
-          <Modal toggleModal={toggleLogin}>
-            <Login toggleModal={toggleLogin} />
-          </Modal>
-        )}
-        {registerModal && (
-          <Modal toggleModal={toggleRegister}>
-            <Registration toggleModal={toggleRegister} />
-          </Modal>
+        <StyledHeaderHidden>
+          <Header />
+        </StyledHeaderHidden>
+        {showModal && (
+          <StyledMenuModal>
+            <StyledBtn onClick={toggleModal}>
+              <svg width={30} height={30}>
+                <use href={`${sprite}#icon-close`} />
+              </svg>
+            </StyledBtn>
+            <Header />
+          </StyledMenuModal>
         )}
         <main>
           <Outlet />

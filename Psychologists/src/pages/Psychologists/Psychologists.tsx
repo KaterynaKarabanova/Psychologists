@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { allTeachers, filteredTeachers } from "../../redux/selectors";
+import {
+  allTeachers,
+  filteredTeachers,
+  showLoadMore,
+} from "../../redux/selectors";
 import { setAllTeachers } from "../../redux/actions";
 import { fetchData } from "../../redux/operations";
 import { Teacher } from "../../types/types";
@@ -14,7 +18,7 @@ const Psychologists = () => {
   const dispatch = useDispatch();
   const teachers: Teacher[] = useSelector(filteredTeachers);
   const allTeachersArr: Teacher[] = useSelector(allTeachers);
-
+  const loadMore = useSelector(showLoadMore);
   useEffect(() => {
     fetchData().then((res) => dispatch(setAllTeachers(res)));
   }, [dispatch]);
@@ -23,7 +27,9 @@ const Psychologists = () => {
     <Container>
       <Filters />
       <TeachersList array={teachers} />
-      {!(allTeachersArr.length - teachers.length <= 0) && <LoadMore />}
+      {loadMore && !(allTeachersArr.length - teachers.length <= 0) && (
+        <LoadMore />
+      )}
     </Container>
   );
 };

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Select, { SingleValue } from "react-select";
 import { StyledWrapper, styles } from "./Filters.styled";
 import { useDispatch } from "react-redux";
-import { setFilter, setFilterFav } from "../../redux/actions";
+import { setFilter, setFilterFav, setShowLoadMore } from "../../redux/actions";
 import { useLocation } from "react-router-dom";
 
 const options = [
@@ -38,6 +38,7 @@ const Filters = () => {
     selectedOption: SingleValue<{ value: string; label: string }>
   ) => {
     setSelectedValue(selectedOption);
+    dispatch(setShowLoadMore(false));
     if (selectedOption) {
       location.pathname === "/Psychologists/psychologists"
         ? dispatch(setFilter(selectedOption.value))

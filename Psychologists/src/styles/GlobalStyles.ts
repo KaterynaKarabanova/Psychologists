@@ -107,6 +107,14 @@ export const Container = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
   display: block;
-  width: 1440px;
-  padding: 0 128px;
+  width: 320px;
+  padding: 0 30px;
+  overflow: hidden;
+  @media (min-width: 768px) {
+    width: 768px;
+  }
+  @media (min-width: 1440px) {
+    width: 1440px;
+    padding: 0 128px;
+  }
 `;

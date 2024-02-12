@@ -13,6 +13,7 @@ export interface RootState {
   favorites: Teacher[];
   filter: string;
   filterFav: string;
+  shoLoadMore: boolean;
 }
 
 export interface Action {

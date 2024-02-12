@@ -10,6 +10,8 @@ export const accessToken = (state: RootState) => state.user.token;
 
 export const userNameInfo = (state: RootState) => state.user.name;
 
+export const showLoadMore = (state: RootState) => state.shoLoadMore;
+
 export const filteredTeachers = (state: RootState) => {
   const { all, showed } = state.teachers;
   const filter = state.filter;
@@ -35,7 +37,7 @@ export const filteredTeachers = (state: RootState) => {
       // Filter teachers array for not popular teachers
       return all.filter((el) => el.rating < 4.7);
     case "ALL":
-      return showed;
+      return all;
     default:
       return showed; // Return the original data if no filter is applied or "Show all" is selected
   }

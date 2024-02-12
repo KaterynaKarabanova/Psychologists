@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { StyledOrangeBtn } from "../Layout/Layout.styled";
+import { StyledOrangeBtn } from "../Layout/Header/Header.styled";
 
 export const StyledTitle = styled.h2`
   font-size: 40px;

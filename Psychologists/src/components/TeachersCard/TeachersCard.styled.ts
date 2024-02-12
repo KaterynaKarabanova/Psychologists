@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FlexCenter } from "../../styles/GlobalStyles";
-import { StyledOrangeBtn } from "../Layout/Layout.styled";
+import { StyledOrangeBtn } from "../Layout/Header/Header.styled";
 import { StyledFavSvgProps } from "../../types/types";
 
 export const StyledCard = styled.div`

@@ -41,3 +41,10 @@ export const setFav = (array: Teacher[]) => {
     payload: array,
   };
 };
+
+export const setShowLoadMore = (value: boolean) => {
+  return {
+    type: "loadMore/set",
+    payload: value,
+  };
+};

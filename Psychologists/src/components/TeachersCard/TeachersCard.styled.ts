@@ -6,20 +6,32 @@ import { StyledFavSvgProps } from "../../types/types";
 export const StyledCard = styled.div`
   width: 100%;
   display: flex;
-  gap: 24px;
-  padding: 24px;
+  flex-direction: column;
+  gap: 15px;
+  padding: 30px 10px;
   border-radius: 30px;
   border: 2px solid var(--border-gray);
   color: var(--text-gray);
   position: relative;
+  @media (min-width: 768px) {
+    padding: 24px;
+    flex-direction: row;
+    gap: 24px;
+  }
 `;
 
 export const StyledImgWrapper = styled(FlexCenter)`
   position: relative;
-  min-width: 120px;
+  width: 120px;
   height: 120px;
   border-radius: 30px;
   border: 2px solid var(--border-gray);
+  @media (min-width: 768px) {
+    min-width: 120px;
+    width: auto;
+  }
+  @media (min-width: 1440px) {
+  }
 `;
 
 export const StyledImg = styled.img`
@@ -57,8 +69,14 @@ export const StyledList = styled.ul`
 export const StyledItem = styled.li`
   padding: 8px 16px;
   background-color: var(--light-gray);
+  font-size: 14px;
   border-radius: 24px;
   font-weight: 500;
+  @media (min-width: 768px) {
+  }
+  @media (min-width: 1440px) {
+    font-size: 16px;
+  }
 `;
 
 export const StyledSpan = styled.span`
@@ -66,15 +84,26 @@ export const StyledSpan = styled.span`
 `;
 
 export const StyledRating = styled.div`
+  width: 140px;
+  gap: 5px;
   position: absolute;
   display: flex;
-  align-items: center;
-  padding: 24px;
-  right: 0;
+  flex-direction: column-reverse;
+  align-items: right;
+  padding: 15px;
+  right: -30px;
   top: 0;
   color: var(--primary-black);
   font-weight: 500;
   line-height: 24px;
+  @media (min-width: 768px) {
+    width: auto;
+    flex-direction: row;
+    padding: 24px;
+    align-items: center;
+    right: 0;
+    gap: 0;
+  }
 `;
 
 export const StyledRatingSvg = styled.svg`
@@ -84,7 +113,12 @@ export const StyledRatingSvg = styled.svg`
 export const StyledRatingText = styled.p`
   padding-right: 16px;
   margin-right: 16px;
-  border-right: 2px solid var(--border-gray);
+
+  @media (min-width: 768px) {
+  }
+  @media (min-width: 1440px) {
+    border-right: 2px solid var(--border-gray);
+  }
 `;
 
 export const StyledPrice = styled.span`

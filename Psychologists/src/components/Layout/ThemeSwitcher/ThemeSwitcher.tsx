@@ -6,9 +6,10 @@ import { styles } from "./ThemeSwitcher.styled";
 const ThemeSwitcher = () => {
   const { setColor } = useTheme();
 
-  const [selectedValue, setSelectedValue] = useState<
-    SingleValue<{ value: string; label: string }>
-  >({ value: "rgba(252, 131, 44, 1)", label: "Orange" });
+  const { currentColor } = useTheme();
+
+  const [selectedValue, setSelectedValue] =
+    useState<SingleValue<{ value: string; label: string }>>(currentColor);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   const handleChange = (
@@ -16,7 +17,7 @@ const ThemeSwitcher = () => {
   ) => {
     setSelectedValue(value);
     if (value) {
-      setColor(value?.value);
+      setColor(value);
     }
   };
 
@@ -36,11 +37,6 @@ const ThemeSwitcher = () => {
   };
   return (
     <div>
-      {/* <select onChange={handleChange}>
-        <option value="rgba(252, 131, 44, 1)">Orange</option>
-        <option value="rgba(52, 112, 255, 1)">Blue</option>
-        <option value="rgba(84, 190, 150, 1)">Green</option>
-      </select> */}
       <Select
         value={selectedValue}
         onChange={(value) => handleChange(value)}

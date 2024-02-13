@@ -113,6 +113,11 @@ export interface StyledFavSvgProps extends SVGProps<SVGSVGElement> {
   isFav?: boolean;
 }
 
+export interface Color {
+  value: string;
+  label: string;
+}
+
 export interface GlobalStylesProps {
-  color?: string; // Define the color prop
+  color?: Color; // Define the color prop
 }

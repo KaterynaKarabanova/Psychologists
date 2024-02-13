@@ -1,9 +1,10 @@
 import React, { useState, useContext, createContext, ReactNode } from "react";
 import { GlobalStyles } from "./GlobalStyles";
+import { Color } from "../types/types";
 
 interface Theme {
-  currentColor: string;
-  setColor: (color: string) => void;
+  currentColor: Color;
+  setColor: (color: Color) => void;
 }
 
 interface ThemeProviderProps {
@@ -13,8 +14,11 @@ interface ThemeProviderProps {
 const ThemeContext = createContext<Theme | undefined>(undefined);
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [currentColor, setCurrentColor] = useState("rgba(252, 131, 44, 1)");
-  const setColor = (newColor: string) => {
+  const [currentColor, setCurrentColor] = useState({
+    value: "rgba(252, 131, 44, 1)",
+    label: "Orange",
+  });
+  const setColor = (newColor: Color) => {
     setCurrentColor(newColor);
   };
 

@@ -42,53 +42,53 @@ const Header = () => {
   };
 
   return (
-    <StyledHeader>
-      <StyledLogo onClick={() => navigate("/Psychologists/")}>
-        psychologists.<StyledLogoSpan>services</StyledLogoSpan>
-      </StyledLogo>
+    <>
+      <StyledHeader>
+        <StyledLogo onClick={() => navigate("/Psychologists/")}>
+          psychologists.<StyledLogoSpan>services</StyledLogoSpan>
+        </StyledLogo>
 
-      <Navigation />
-      <ThemeSwitcher />
-      <StyledBtnWrapper>
-        {token ? (
-          <>
-            <StyledAvatarDiv>
-              <svg width={24} height={24}>
-                <use href={`${sprite}#icon-user`} />
-              </svg>
-            </StyledAvatarDiv>
-            <StyledUserName>{userName}</StyledUserName>
-            <StyledTranspBtn type="button" onClick={onSignOut}>
-              Log Out
-            </StyledTranspBtn>
-          </>
-        ) : (
-          <>
-            {" "}
-            <StyledTranspBtn onClick={() => setLoginModal(true)}>
-              Log In
-            </StyledTranspBtn>
-            <StyledOrangeBtn onClick={() => setRegisterModal((prev) => !prev)}>
-              Registration
-            </StyledOrangeBtn>
-          </>
-        )}
-      </StyledBtnWrapper>
-    </StyledHeader>
+        <Navigation />
+        <ThemeSwitcher />
+        <StyledBtnWrapper>
+          {token ? (
+            <>
+              <StyledAvatarDiv>
+                <svg width={24} height={24}>
+                  <use href={`${sprite}#icon-user`} />
+                </svg>
+              </StyledAvatarDiv>
+              <StyledUserName>{userName}</StyledUserName>
+              <StyledTranspBtn type="button" onClick={onSignOut}>
+                Log Out
+              </StyledTranspBtn>
+            </>
+          ) : (
+            <>
+              {" "}
+              <StyledTranspBtn onClick={() => setLoginModal(true)}>
+                Log In
+              </StyledTranspBtn>
+              <StyledOrangeBtn
+                onClick={() => setRegisterModal((prev) => !prev)}
+              >
+                Registration
+              </StyledOrangeBtn>
+            </>
+          )}
+        </StyledBtnWrapper>
+      </StyledHeader>
+      {loginModal && (
+        <Modal toggleModal={toggleLogin}>
+          <Login toggleModal={toggleLogin} />
+        </Modal>
+      )}
+      {registerModal && (
+        <Modal toggleModal={toggleRegister}>
+          <Registration toggleModal={toggleRegister} />
+        </Modal>
+      )}
+    </>
   );
-  {
-    loginModal && (
-      <Modal toggleModal={toggleLogin}>
-        <Login toggleModal={toggleLogin} />
-      </Modal>
-    );
-  }
-  {
-    registerModal && (
-      <Modal toggleModal={toggleRegister}>
-        <Registration toggleModal={toggleRegister} />
-      </Modal>
-    );
-  }
 };
 export default Header;

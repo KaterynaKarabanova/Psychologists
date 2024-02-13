@@ -29,7 +29,7 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
   src: url(${fontBold}) format('truetype');
 }
 :root{
-  --primary-orange: ${(props) => props.color};
+  --primary-orange: ${(props) => props.color?.value};
   --primary-blue:rgba(52, 112, 255, 1);
   --primary-black:#191A15;
   --primary-white:rgba(251, 251, 251, 1);
@@ -109,7 +109,7 @@ export const Container = styled.div`
   display: block;
   width: 320px;
   padding: 0 30px;
-  overflow: hidden;
+
   @media (min-width: 768px) {
     width: 768px;
   }

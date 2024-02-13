@@ -23,7 +23,7 @@ import Filters from "../../components/Filters/Filters";
 const Favorite = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [favorites, setFavorites] = useState<Teacher[]>([]);
+
   const teachers: Teacher[] = useSelector(allTeachers);
 
   const favoriteTeachers: Teacher[] = useSelector((state: RootState) =>

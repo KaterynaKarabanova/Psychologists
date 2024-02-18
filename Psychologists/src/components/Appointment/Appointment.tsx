@@ -29,7 +29,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Appointment = (props: AppointmentProps) => {
-  const { name, avatar, id } = props;
+  const { name, avatar, id, toggleModal } = props;
   const [selectedTime, setSelectedTime] = useState(new Date());
 
   const handleTimeChange = (time: any) => {
@@ -73,6 +73,7 @@ const Appointment = (props: AppointmentProps) => {
     try {
       await sendAppointments(id, data);
       toast("Appointment sent successfully!", { type: "success" });
+      setTimeout(toggleModal, 2000);
       resetForm();
     } catch (error) {
       toast.error("Something went wrong! Check your info and try again");

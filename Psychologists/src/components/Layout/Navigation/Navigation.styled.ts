@@ -10,8 +10,6 @@ export const StyledNav = styled.div`
   line-height: 20px;
   letter-spacing: -0.16px;
   color: var(--primary-black);
-  @media (min-width: 768px) {
-  }
   @media (min-width: 1440px) {
     flex-direction: row;
     font-size: 16px;
@@ -21,12 +19,28 @@ export const StyledNav = styled.div`
 `;
 
 export const StyledNavLink = styled(NavLink)`
-  color: var(--primary-black);
+  color: ${(props) =>
+    props.to === window.location.pathname
+      ? "var(--primary-orange)"
+      : "var(--primary-black)"};
   transition: all var(--transition);
-  &:hover {
+  position: relative;
+  &:hover,
+  &:focus,
+  &:active {
     color: var(--primary-orange);
   }
-  &:focus {
-    color: var(--primary-orange);
+
+  &::after {
+    content: "";
+    display: ${(props) =>
+      props.to === window.location.pathname ? "block" : "none"};
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--primary-orange);
+    top: 25px;
+    right: 50%;
   }
 `;

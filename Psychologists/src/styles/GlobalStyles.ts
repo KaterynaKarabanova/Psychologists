@@ -35,6 +35,7 @@ export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
   --primary-white:rgba(251, 251, 251, 1);
   --transparent-white:rgba(251, 251, 251, 0.5);
   --hover-orange:rgba(252, 131, 44, 0.2);
+  --hover-button:rgba(252, 131, 44, 0.8);
   --light-gray:#F3F3F3;
   --border-gray:rgba(25, 26, 21, 0.2);
   --transparent-gray:rgba(25, 26, 21, 0.10);

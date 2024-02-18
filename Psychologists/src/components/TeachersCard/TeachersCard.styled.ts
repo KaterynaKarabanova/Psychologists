@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { FlexCenter } from "../../styles/GlobalStyles";
 import { StyledOrangeBtn } from "../Layout/Header/Header.styled";
-import { StyledFavSvgProps } from "../../types/types";
 
 export const StyledCard = styled.div`
   width: 100%;
@@ -146,9 +145,4 @@ export const StyledReadMore = styled.button`
 
 export const StyledAppointmentBtn = styled(StyledOrangeBtn)`
   padding: 14px 32px;
-`;
-
-export const StyledFavSvg = styled.svg<StyledFavSvgProps>`
-  fill: ${(props) => (props.isFav ? "var(--primary-orange)" : "transparent")};
-  stroke: ${(props) => (props.isFav ? "var(--primary-orange)" : "black")};
 `;

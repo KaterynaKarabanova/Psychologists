@@ -1,5 +1,3 @@
-import { SVGProps } from "react";
-
 export interface RootState {
   teachers: {
     all: Teacher[];
@@ -18,7 +16,7 @@ export interface RootState {
 
 export interface Action {
   type: string;
-  payload?: any; // You can replace 'any' with a more specific type
+  payload?: any;
 }
 
 export interface Teacher {
@@ -99,6 +97,7 @@ export interface AppointmentProps {
   name: string;
   avatar: string;
   id: number;
+  toggleModal: () => void;
 }
 
 export interface AppointmentData {
@@ -107,10 +106,6 @@ export interface AppointmentData {
   name: string;
   comment: string;
   time: string;
-}
-
-export interface StyledFavSvgProps extends SVGProps<SVGSVGElement> {
-  isFav?: boolean;
 }
 
 export interface Color {

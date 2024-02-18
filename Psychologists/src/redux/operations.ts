@@ -28,7 +28,7 @@ export const getFav = async () => {
   }
 };
 
-export const toggleFavoriteToUser = async (cardId: number) => {
+export const toggleFavoriteToUser = async (updatedFavorites: number[]) => {
   const userId = auth.currentUser?.uid;
   if (!userId) {
     throw new Error();
@@ -36,14 +36,15 @@ export const toggleFavoriteToUser = async (cardId: number) => {
 
   try {
     const userRef = ref(database, `/users/${userId}`);
-    const fav = await getFav();
-    const updatedFavorites = fav.includes(cardId)
-      ? fav.filter((el: number) => el !== cardId)
-      : [...(fav || []), cardId];
+    // const fav = await getFav();
+    // const updatedFavorites = fav.includes(cardId)
+    //   ? fav.filter((el: number) => el !== cardId)
+    //   : [...(fav || []), cardId];
 
     await update(userRef, {
       favorites: updatedFavorites,
     });
+
     return true;
   } catch (error) {
     console.error("Error adding favorite:", error);

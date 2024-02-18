@@ -13,6 +13,7 @@ import { Container } from "../../styles/GlobalStyles";
 import TeachersList from "../../components/TeachersList/TeachersList";
 import LoadMore from "../../components/LoadMore/LoadMore";
 import Filters from "../../components/Filters/Filters";
+import { StyledMainWrapper } from "./Psychologists.styled";
 
 const Psychologists = () => {
   const dispatch = useDispatch();
@@ -25,11 +26,13 @@ const Psychologists = () => {
 
   return (
     <Container>
-      <Filters />
-      <TeachersList array={teachers} />
-      {loadMore && !(allTeachersArr.length - teachers.length <= 0) && (
-        <LoadMore />
-      )}
+      <StyledMainWrapper>
+        <Filters />
+        <TeachersList array={teachers} />
+        {loadMore && !(allTeachersArr.length - teachers.length <= 0) && (
+          <LoadMore />
+        )}
+      </StyledMainWrapper>
     </Container>
   );
 };

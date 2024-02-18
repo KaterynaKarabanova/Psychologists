@@ -30,7 +30,7 @@ export const StyledOrangeBtn = styled.button`
   font-weight: 500;
   transition: all var(--transition);
   &:hover {
-    background-color: var(--hover-orange);
+    background-color: var(--hover-button);
   }
 `;
 

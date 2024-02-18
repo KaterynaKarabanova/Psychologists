@@ -5,7 +5,6 @@ import sprite from "../../images/sprite.svg";
 import {
   StyledAppointmentBtn,
   StyledCard,
-  StyledFavSvg,
   StyledHeartBtn,
   StyledImg,
   StyledImgWrapper,
@@ -25,16 +24,35 @@ import { toggleFavoriteToUser, getFav } from "../../redux/operations";
 import Modal from "../Modal/Modal";
 import Appointment from "../Appointment/Appointment";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { allTeachers } from "../../redux/selectors";
+import { setFav } from "../../redux/actions";
 
 const TeachersCard = (props: TeachersCardProps) => {
-  const { el } = props;
+  const dispatch = useDispatch();
+  const all = useSelector(allTeachers);
+
+  const {
+    id,
+    avatar_url,
+    name,
+    experience,
+    license,
+    specialization,
+    initial_consultation,
+    reviews,
+    rating,
+    price_per_hour,
+    about,
+  } = props.el;
+
   const [showBtn, setShowBtn] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    getFav().then((data) => setIsFavorite(data.includes(el.id)));
-  }, [el.id]);
+    getFav().then((data) => setIsFavorite(data.includes(id)));
+  }, [id]);
 
   const toggleModal = () => {
     setShowModal((prev) => !prev);
@@ -46,16 +64,20 @@ const TeachersCard = (props: TeachersCardProps) => {
 
   const handleToggleFavorite = async () => {
     try {
-      const success = await toggleFavoriteToUser(el.id);
+      const fav = await getFav();
+      const updatedFavorites = fav.includes(id)
+        ? fav.filter((el: number) => el !== id)
+        : [...(fav || []), id];
+      dispatch(setFav(all.filter((el) => updatedFavorites.includes(el.id))));
+      const success = await toggleFavoriteToUser(updatedFavorites);
       if (success !== undefined) {
-        setIsFavorite((prev) => !prev); // Update isFavorite state immediately after toggling favorite status
+        setIsFavorite((prev) => !prev);
       }
     } catch (error) {
       toast.info(
         "Authorize first! Only authorized users could mark cards as favourite"
       );
       console.error("Error toggling favorite:", error);
-      // Handle error
     }
   };
 
@@ -63,35 +85,35 @@ const TeachersCard = (props: TeachersCardProps) => {
     <StyledCard>
       <ToastContainer />
       <StyledImgWrapper>
-        <StyledImg src={el.avatar_url} alt="" />
+        <StyledImg src={avatar_url} alt="" />
         <StyledSvg width={24} height={24}>
           <use href={`${sprite}#icon-circle`} />
         </StyledSvg>
       </StyledImgWrapper>
       <div>
         <StyledProf>Psychologist</StyledProf>
-        <StyledName>{el.name}</StyledName>
+        <StyledName>{name}</StyledName>
         <StyledList>
           <StyledItem>
-            Experience: <StyledSpan>{el.experience}</StyledSpan>
+            Experience: <StyledSpan>{experience}</StyledSpan>
           </StyledItem>
           <StyledItem>
-            License: <StyledSpan>{el.license}</StyledSpan>
+            License: <StyledSpan>{license}</StyledSpan>
           </StyledItem>
           <StyledItem>
-            Specialization: <StyledSpan>{el.specialization}</StyledSpan>
+            Specialization: <StyledSpan>{specialization}</StyledSpan>
           </StyledItem>
           <StyledItem>
             Initial_consultation:{" "}
-            <StyledSpan>{el.initial_consultation}</StyledSpan>
+            <StyledSpan>{initial_consultation}</StyledSpan>
           </StyledItem>
         </StyledList>
-        <p>{el.about}</p>
+        <p>{about}</p>
         {showBtn ? (
           <StyledReadMore onClick={toggleBtn}>Read more</StyledReadMore>
         ) : (
           <div>
-            <ReviewList reviews={el.reviews} />
+            <ReviewList reviews={reviews} />
             <StyledAppointmentBtn onClick={toggleModal}>
               Make an appointment
             </StyledAppointmentBtn>
@@ -102,19 +124,29 @@ const TeachersCard = (props: TeachersCardProps) => {
         <StyledRatingSvg width={16} height={16}>
           <use href={`${sprite}#icon-star`} />
         </StyledRatingSvg>
-        <StyledRatingText>Rating: {el.rating}</StyledRatingText>
+        <StyledRatingText>Rating: {rating}</StyledRatingText>
         <p>
-          Price / 1 hour: <StyledPrice>{el.price_per_hour}$</StyledPrice>
+          Price / 1 hour: <StyledPrice>{price_per_hour}$</StyledPrice>
         </p>
         <StyledHeartBtn onClick={() => handleToggleFavorite()}>
-          <StyledFavSvg width={26} height={26} isFav={isFavorite}>
+          <svg
+            width={26}
+            height={26}
+            fill={isFavorite ? "var(--primary-orange)" : "transparent"}
+            stroke={isFavorite ? "var(--primary-orange)" : "black"}
+          >
             <use href={`${sprite}#icon-heart-2`} />
-          </StyledFavSvg>
+          </svg>
         </StyledHeartBtn>
       </StyledRating>
       {showModal && (
         <Modal toggleModal={toggleModal}>
-          <Appointment id={el.id} name={el.name} avatar={el.avatar_url} />
+          <Appointment
+            id={id}
+            name={name}
+            avatar={avatar_url}
+            toggleModal={toggleModal}
+          />
         </Modal>
       )}
     </StyledCard>

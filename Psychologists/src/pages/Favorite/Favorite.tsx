@@ -19,6 +19,7 @@ import sprite from "../../images/sprite.svg";
 import favImg from "../../images/favorites.jpg";
 import { useNavigate } from "react-router-dom";
 import Filters from "../../components/Filters/Filters";
+import { StyledMainWrapper } from "../Psychologists/Psychologists.styled";
 
 const Favorite = () => {
   const navigate = useNavigate();
@@ -46,31 +47,35 @@ const Favorite = () => {
 
   return (
     <Container>
-      {favoriteTeachers.length ? (
-        <>
-          <Filters />
-          <TeachersList array={memoizedFavoriteTeachers} />
-        </>
-      ) : (
-        <StyledHomeWrapper>
-          <StyledTextWrapper>
-            <StyledTitle>
-              You haven't marked any{" "}
-              <StyledTitleSpan>Psychologists</StyledTitleSpan> as favorite yet
-            </StyledTitle>
+      <StyledMainWrapper>
+        {favoriteTeachers.length ? (
+          <>
+            <Filters />
+            <TeachersList array={memoizedFavoriteTeachers} />
+          </>
+        ) : (
+          <StyledHomeWrapper>
+            <StyledTextWrapper>
+              <StyledTitle>
+                You haven't marked any{" "}
+                <StyledTitleSpan>Psychologists</StyledTitleSpan> as favorite yet
+              </StyledTitle>
 
-            <StyledBtn onClick={() => navigate("/Psychologists/psychologists")}>
-              View list
-              <svg width={18} height={18}>
-                <use href={`${sprite}#icon-arrow`} />
-              </svg>
-            </StyledBtn>
-          </StyledTextWrapper>
-          <StyledImgWrapper>
-            <StyledImg src={favImg} alt="empty" width={500} />
-          </StyledImgWrapper>
-        </StyledHomeWrapper>
-      )}
+              <StyledBtn
+                onClick={() => navigate("/Psychologists/psychologists")}
+              >
+                View list
+                <svg width={18} height={18}>
+                  <use href={`${sprite}#icon-arrow`} />
+                </svg>
+              </StyledBtn>
+            </StyledTextWrapper>
+            <StyledImgWrapper>
+              <StyledImg src={favImg} alt="empty" width={500} />
+            </StyledImgWrapper>
+          </StyledHomeWrapper>
+        )}
+      </StyledMainWrapper>
     </Container>
   );
 };

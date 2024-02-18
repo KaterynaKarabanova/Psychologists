@@ -37,7 +37,7 @@ export const filteredTeachers = (state: RootState) => {
       // Filter teachers array for not popular teachers
       return all.filter((el) => el.rating < 4.7);
     case "ALL":
-      return all;
+      return showed;
     default:
       return showed; // Return the original data if no filter is applied or "Show all" is selected
   }
